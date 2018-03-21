@@ -1,0 +1,36 @@
+﻿<table style="width: 100%" cellspacing="0">
+    <tr>
+        <td><h1>{{head}}</h1></td>
+        <td align="right"><button routerLink='/addentry/Mitarbeiter' routerLinkActive='active' md-raised-button color="BoschRed" style="color:white;margin:10px 0px 10px 10px;height:60px !important;width:180px !important;">{{new}}</button></td>
+    </tr>
+</table>
+
+<md-card style="margin-bottom: 20px;" [style.background]="'#b3c6ff'">
+    <table style="width: 100%" cellspacing="0">
+        <tr>
+            <td><md-input *ngIf='Observername' placeholder={{obsname}} disabled [(ngModel)]='Observername' style="width: 90%"></md-input></td>
+            <td><md-input *ngIf='area' placeholder={{placename}} disabled [(ngModel)]='area' style="width: 90%"></md-input></td>
+            <td align="right"><button md-raised-button color="success" style="margin:0px 0px 0px 0px;height:60px !important;width:150px !important;" (click)="goToSelectEmployee('Insert')">{{send}} &raquo;</button></td>
+            <td align="right"><button md-raised-button color="BoschRed" style="margin:0px 0px 0px 0px;height:60px !important;width:150px !important;" (click)='confirm1.show()'>{{delete}} &raquo;</button></td>
+        </tr>
+    </table>
+</md-card>
+<section *ngIf="employeelist!=''" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+    <label layout="row" layout-xs="column" *ngFor='let emp of employeelist' md-raised-button id={{emp[0].id}} style="margin: 2px 2px;height:120px;width:245px;color:white;background-color:#266399;vertical-align:middle;">
+        <input class="messageCheckbox" type="checkbox" value={{emp[0].id}} (click)='goToColorChange(emp[0].id)' [hidden]="true"> {{emp[0].name}}
+    </label>
+</section>
+<md-card>
+    <div *ngIf="employeelist==''" style="color:red">
+        <b>{{nonselect}}</b>
+    </div>
+</md-card>
+
+<md2-dialog #confirm1>
+    <md2-dialog-title>{{warning}}!!!</md2-dialog-title>
+    <div>{{warndata}}</div>
+    <md2-dialog-footer>
+        <button md-raised-button color="success" (click)="goToSelectEmployee('Delete',confirm1)">{{yes}}</button>
+        <button md-raised-button color="BoschRed" (click)="confirm1.close()">{{no}}</button>
+    </md2-dialog-footer>
+</md2-dialog>

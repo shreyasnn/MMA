@@ -1,0 +1,34 @@
+﻿<div *ngIf='list'>
+    <md-card>
+        <h1>{{heading}}</h1>
+        <p tooltip="In the case of a multimoment acquisition, the frequency of certain run-off types is detected by random sampling in one or more similar working systems. In production, assembly and logistics, these short-term inspections are carried out in so-called tours of specialists">
+            {{defination}}
+        </p>
+    </md-card>
+    <md-card>
+        <h2><span tooltip="Start">{{start}}</span></h2>
+        <p tooltip="Please note operating instructions before starting, this web application MMA (Multi-Moment Analysis). User manual is available below.">
+            {{userintro}}
+        </p>
+        <button md-raised-button tooltip="Click to download User Guide" color="primary" onclick="javascript: window.location = 'Doc/MMA_New.pptx'">{{userguide}} &raquo;</button>
+    </md-card>
+    <md-card>
+        <span tooltip="Please click here for the report">{{report}}</span>
+        <a style="color:red;font-size: 150%;" routerLink='/report' routerLinkActive='active'>&nbsp;{{reportlink}}</a>
+        <span tooltip="Or Please select the time window here">{{timeslot}}</span>
+        <a style="color:red;font-size: 150%;" routerLink='/timeslot' routerLinkActive='active'>&nbsp;{{timewindowlink}}</a>
+    </md-card>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

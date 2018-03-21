@@ -1,0 +1,109 @@
+﻿<h1>{{head}}</h1>
+
+<section layout="row" layout-sm="column" layout-align="center center" layout-wrap style="margin: 20px 20px;">
+
+    <md-card [style.background]="'#b3c6ff'">
+        <div><b>{{timeduration}}</b></div>
+        <md-radio-group [(ngModel)]="time">
+            <md-grid-list cols="8" rowHeight="4:2">
+                <md-grid-tile>
+                    <md-radio-button value="10">10 min</md-radio-button>
+                </md-grid-tile>
+                <md-grid-tile>
+                    <md-radio-button value="15">15 min</md-radio-button>
+                </md-grid-tile>
+                <md-grid-tile>
+                    <md-radio-button value="20">20 min</md-radio-button>
+                </md-grid-tile>
+                <md-grid-tile>
+                    <md-radio-button value="25">25 min</md-radio-button>
+                </md-grid-tile>
+                <md-grid-tile>
+                    <md-radio-button value="30">30 min</md-radio-button>
+                </md-grid-tile>
+                <md-grid-tile>
+                    <md-radio-button value="35">35 min</md-radio-button>
+                </md-grid-tile>
+                <md-grid-tile>
+                    <md-radio-button value="40">40 min</md-radio-button>
+                </md-grid-tile>
+                <md-grid-tile>
+                    <md-radio-button value="45">45 min</md-radio-button>
+                </md-grid-tile>
+                <md-grid-tile>
+                    <md-radio-button value="50">50 min</md-radio-button>
+                </md-grid-tile>
+                <md-grid-tile>
+                    <md-radio-button value="55">55 min</md-radio-button>
+                </md-grid-tile>
+                <md-grid-tile>
+                    <md-radio-button value="60">60 min</md-radio-button>
+                </md-grid-tile>
+            </md-grid-list>
+        </md-radio-group>
+    </md-card>
+</section>
+
+<section layout="row" layout-sm="column" layout-align="center center" layout-wrap style="margin: 20px 20px;">
+    <md-card [style.background]="'#b3c6ff'">
+        <div>
+            <b>{{shiftname}}</b>
+        </div>
+        <div>
+            <md-radio-group [(ngModel)]="shift">
+                <md-grid-list cols="4" rowHeight="90px">
+                    <md-grid-tile>
+                        <md-radio-button value="1">{{earlyshift}}</md-radio-button>
+                    </md-grid-tile>
+                    <md-grid-tile>
+                        <md-radio-button value="2">{{lateshift}}</md-radio-button>
+                    </md-grid-tile>
+                    <md-grid-tile>
+                        <md-radio-button value="3">{{nightshift}}</md-radio-button>
+                    </md-grid-tile>
+                </md-grid-list>
+            </md-radio-group>
+            <table  style="width:70%" cellspacing="0">
+                <tr>
+                    <td>
+                        <md2-datepicker [(ngModel)]="starttime" type="datetime" placeholder="Startzeit" format="DD/MM/YYYY HH:mm" style="width:50%;">
+                        </md2-datepicker>
+                        @*<md2-datepicker [(ngModel)]="starttime" type="time" placeholder="Startzeit" format="HH:mm" style="width:50%;">
+                        </md2-datepicker>*@
+                    </td>
+                    <td>
+                        <md2-datepicker [(ngModel)]="endtime" type="datetime" placeholder="Endzeit" format="DD/MM/YYYY HH:mm" style="width:50%;">
+                        </md2-datepicker>
+                        @*<md2-datepicker [(ngModel)]="endtime" type="time" placeholder="Endzeit" format="HH:mm" style="width: 50%;">
+                        </md2-datepicker>*@
+                    </td>
+                    </tr>
+                </table>
+        </div>
+    </md-card>
+</section>
+
+<section layout="row" layout-sm="column" layout-align="center center" layout-wrap style="margin: 20px 20px;">
+    <md-card [style.background]="'#b3c6ff'">
+        <div>
+            <b>{{placename}}</b>
+        </div>
+        <md-radio-group [(ngModel)]="ort">
+            <md-grid-list cols="8" rowHeight="90px">
+                <md-grid-tile *ngFor='let areaname of area'>
+                    <md-radio-button value={{areaname[0].name}}>{{areaname[0].name}}</md-radio-button>
+                </md-grid-tile>
+            </md-grid-list>
+        </md-radio-group>
+    </md-card>
+</section>
+
+<button md-raised-button color="success" style="margin: 10px 20px;height:50px !important;width:150px !important;" (click)="((time == undefined || shift == undefined || starttime == undefined || endtime == undefined || ort== undefined) ? alert.show() : goToSubmit(time,shift,ort,starttime,endtime))">{{send}} &raquo;</button>
+<md2-dialog #alert>
+    <md2-dialog-title>{{warning}}!!!</md2-dialog-title>
+    <div style="color:red">{{fillall}}</div>
+    <md2-dialog-footer>
+        <button md-raised-button (click)="alert.close()">{{cancel}}</button>
+    </md2-dialog-footer>
+</md2-dialog>
+

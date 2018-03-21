@@ -1,0 +1,19 @@
+﻿
+<table style="width: 100%" cellspacing="0">
+    <tr>
+        <td><h1>{{head}}</h1></td>
+        <td align="right"><button routerLink='/timeslot' routerLinkActive='active' md-raised-button color="BoschRed" style="color:white;margin:10px 0px 10px 10px;height:60px !important;width:180px !important;">{{new}}</button></td>
+    </tr>
+</table>
+
+<md-card style="margin-bottom: 20px;" [style.background]="'#b3c6ff'">
+    <md-input *ngIf='Observername' placeholder={{obsname}} disabled [(ngModel)]='Observername'></md-input>
+    <md-input *ngIf='area' placeholder={{placename}} disabled [(ngModel)]='area'></md-input>
+    <md-input *ngIf='nonselect' disabled style="width: 300px;color:darkred" [(ngModel)]='nonselect'></md-input>
+</md-card>
+
+<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+    <button [style.background-color]="getStyle(time)" id={{time}} *ngFor='let time of timelist' (click)='goToNext()' md-raised-button style="margin: 2px 2px;height:120px;width:245px; color: white;vertical-align:middle;">
+        {{time}}
+    </button>
+</section>

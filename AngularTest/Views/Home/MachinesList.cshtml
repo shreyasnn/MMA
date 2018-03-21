@@ -1,0 +1,38 @@
+﻿<h1>{{head}}</h1>
+<md-card style="margin-bottom: 20px;" [style.background]="'#b3c6ff'">
+    <md-input *ngIf='Observername' placeholder={{obsname}} disabled [(ngModel)]='Observername'></md-input>
+    <md-input *ngIf='area' placeholder={{placename}} disabled [(ngModel)]='area'></md-input>
+    <b>{{lastdetails}}:</b> {{lastdata}}
+</md-card>
+<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+    <button *ngFor='let machine of machines' [style.background-color]="getStyle(machine[0].name)" value={{machine[0].id}} id={{machine[0].id}} (click)="goToNext(machine[0].name)" (dblclick)="goToEdit(machine[0].name,machine[0].id,Edit)" md-raised-button style="margin: 2px 2px;height:120px;width:245px;vertical-align:middle;color:white;">
+        {{getButtonLabel(machine[0].name)}}
+    </button>
+</section>
+
+<md2-dialog #Edit>
+    <md2-dialog-title>{{update}} {{head}}</md2-dialog-title>
+    <md-input class="demo-full-width" placeholder={{company}} disabled value="Robert Bosch GmbH"> </md-input>
+    <table style="width: 100%" cellspacing="0" cellpadding="10">
+        <tr><td><md-input #machid disabled placeholder="ID" value={{machineid}} style="width: 80%" required></md-input></td></tr>
+        <tr>
+            <td><md-input #place disabled placeholder={{placename}} value={{area}} style="width: 80%" required></md-input></td>
+            <td><md-input #machinename placeholder={{station}} style="width: 80%" value={{machine}} required></md-input></td>
+        </tr>
+    </table>
+    <md2-dialog-footer>
+        <button md-raised-button color="success" (click)="goToUpdate(machid.value,place.value,machinename.value,Edit)">{{update}}</button>
+        <button md-raised-button color="BoschRed" (click)="confirm1.show()">{{delete}}</button>
+        <button md-raised-button (click)="Edit.close()">{{cancel}}</button>
+    </md2-dialog-footer>
+</md2-dialog>
+
+<md2-dialog #confirm1>
+    <md2-dialog-title>{{warning}}!!!</md2-dialog-title>
+    <div><b>{{machineid}}-</b> {{warndata}}</div>
+    <md2-dialog-footer>
+        <button md-raised-button color="success" (click)="goToDelete(machineid,area,machine,confirm1,Edit)">{{yes}}</button>
+        <button md-raised-button color="BoschRed" (click)="confirm1.close()">{{no}}</button>
+    </md2-dialog-footer>
+</md2-dialog>
+

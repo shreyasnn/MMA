@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a6a47ef8020241abba0f80a039914cd9" Name="Diagram1">
+        <EntityTypeShape EntityType="mmsdbModel.MMS_Beobachter" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="mmsdbModel.MMS_Beobachtertouren" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="mmsdbModel.MMS_Bereich" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="mmsdbModel.MMS_Maschinenbeobachtung" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mmsdbModel.MMS_Maschinenzustand" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mmsdbModel.MMS_Mitarbeiter" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mmsdbModel.MMS_Mitarbeiterbeobachtung" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="mmsdbModel.MMS_Mitarbeiterfunktion" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="mmsdbModel.MMS_Obertaetigkeit_Untertaetigkeit" Width="1.5" PointX="5.25" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="mmsdbModel.MMS_Ort" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mmsdbModel.MMS_Taetigkeit" Width="1.5" PointX="3" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="mmsdbModel.MMS_Tourinformation" Width="1.5" PointX="3" PointY="15.875" IsExpanded="true" />
+        <AssociationConnector Association="mmsdbModel.FK_MMS_Beobachtertouren_MMS_Beobachter" ManuallyRouted="false" />
+        <AssociationConnector Association="mmsdbModel.FK_MMS_Mitarbeiterbeobachtung_MMS_Beobachter" ManuallyRouted="false" />
+        <AssociationConnector Association="mmsdbModel.FK_MMS_Beobachtertouren_MMS_Bereich" ManuallyRouted="false" />
+        <AssociationConnector Association="mmsdbModel.FK_MMS_Mitarbeiterbeobachtung_MMS_Bereich" ManuallyRouted="false" />
+        <AssociationConnector Association="mmsdbModel.FK_MMS_Ort_MMS_Bereich" ManuallyRouted="false" />
+        <AssociationConnector Association="mmsdbModel.FK_MMS_Tourinformation_MMS_Bereich" ManuallyRouted="false" />
+        <AssociationConnector Association="mmsdbModel.FK_MMS_Maschinenbeobachtung_MMS_Maschinenbeobachtung" ManuallyRouted="false" />
+        <AssociationConnector Association="mmsdbModel.FK_MMS_Mitarbeiter_MMS_Mitarbeiter" ManuallyRouted="false" />
+        <AssociationConnector Association="mmsdbModel.FK_MMS_Mitarbeiterbeobachtung_MMS_Mitarbeiterfunktion" ManuallyRouted="false" />
+        <AssociationConnector Association="mmsdbModel.FK_MMS_Mitarbeiterbeobachtung_MMS_Ort" ManuallyRouted="false" />
+        <AssociationConnector Association="mmsdbModel.FK_MMS_Mitarbeiterbeobachtung_MMS_Taetigkeit" ManuallyRouted="false" />
+        <AssociationConnector Association="mmsdbModel.FK_MMS_Obertaetigkeit_Untertaetigkeit_MMS_Taetigkeit1" ManuallyRouted="false" />
+        <AssociationConnector Association="mmsdbModel.MMS_Oberort_Unterort" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

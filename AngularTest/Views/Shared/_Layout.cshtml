@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <base href="@Url.Content("~/")" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MMA</title>
+    <link rel="icon" href="~/Picture/Doppel-T-Anker_(Bosch-Logo).svg.png" type="image/png">
+
+    <!-- polyfills -->
+    <script src="~/Scripts/core-js/client/shim.min.js"></script>
+    <script src="~/Scripts/zone.js.js"></script>
+    <script src="~/Scripts/reflect-metadata.js"></script>
+    <script src="~/Scripts/rxjs/bundles/Rx.js"></script>
+  
+    <!-- angular -->
+    <script src="~/Scripts/angular/core/bundles/core.umd.js"></script>
+    <script src="~/Scripts/angular/common/bundles/common.umd.js"></script>
+    <script src="~/Scripts/angular/compiler/bundles/compiler.umd.js"></script>
+    <script src="~/Scripts/angular/platform-browser/bundles/platform-browser.umd.js"></script>
+    <script src="~/Scripts/angular/platform-browser/bundles/platform-browser-dynamic.umd.js"></script>
+    <script src="~/Scripts/angular/forms.js"></script>
+    <script src="~/Scripts/angular/http.js"></script>
+    <script src="~/Scripts/angular/router.js"></script>
+    <script src="~/Scripts/angular/upgrade.js"></script>
+
+
+    @*<script src="~/Scripts/r.js"></script>*@
+   
+    <!-- Added angular material files -->
+    <script src="~/Angularapp/angular.material.js"></script> 
+    <link href="~/Content/angular.material1.css" rel="stylesheet" />
+    <link href="~/Content/angular.material2.css" rel="stylesheet" />
+    @*<script src="~/Angularapp/md2datepicker.js"></script>*@
+    <script src="~/Angularapp/md2.js"></script>
+    @*<link href="~/Content/fonticon.css" rel="stylesheet" />*@
+    
+   
+  
+    <!-- Added fafa icons files -->
+    @*<link rel="stylesheet" href="~/font-awesome/css/font-awesome.min.css">*@
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    <!-- Added angular js files -->
+    <script src="~/Angularapp/heros.service.js"></script>
+    <script src="~/Angularapp/Herolistcomponent.js"></script>
+    <script src="~/Angularapp/nachbar.component.js"></script>
+    <script src="~/Angularapp/addentry.js"></script>
+    <script src="~/Angularapp/Observer.js"></script>
+    <script src="~/Angularapp/Area.js"></script>
+    <script src="~/Angularapp/Time.js"></script>
+    <script src="~/Angularapp/Employee.js"></script>
+    <script src="~/Angularapp/Employee2.js"></script>
+    <script src="~/Angularapp/Employee3.js"></script>
+    <script src="~/Angularapp/Employee4.js"></script>
+    <script src="~/Angularapp/Machine.js"></script>
+    <script src="~/Angularapp/Machine2.js"></script>
+    <script src="~/Angularapp/Machine3.js"></script>
+    <script src="~/Angularapp/TimeSlot.js"></script>
+    <script src="~/Angularapp/Report.js"></script>
+    <script src="~/Angularapp/app.routing.js"></script>
+    <script src="~/Angularapp/app.module.js"></script>
+    <script src="~/Angularapp/main.js"></script>
+
+   
+    
+</head>
+  <body>
+    <div style="margin: 0px 0px;">
+        @RenderBody()
+         <hr />
+    </div>
+      <div class="" style="margin-top: 30px">
+          <footer>
+              <p style="margin-left: 60px;">
+                  &copy; @DateTime.Now.Year - Robert Bosch GmbH
+                  <img src="~/Picture/Logo.png" alt="Fjords" width="150" height="50" align="right" style="margin-right: 60px;">
+              </p>
+          </footer>
+      </div>
+  </body>
+</html>

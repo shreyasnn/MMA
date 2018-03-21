@@ -1,0 +1,314 @@
+﻿@*This page contains the view of the report and all the angular 2 components.
+    The ng if method is used to show and hide the radio buttons for their respective functions.
+    A part of database connection is given in this page.*@
+<section layout="center" layout-sm="column" layout-align="center" layout-wrap>
+    <table cellspacing="20">
+        <tr>
+            <td><h3>{{selection}}:</h3></td>
+            <td><md-radio-button (change)="gotoselect1()" [checked]="true">{{employeeselect}} </md-radio-button></td>
+            <td><md-radio-button (change)="gotoselect2()"> {{machinestation}}</md-radio-button></td>
+
+        </tr>
+    </table>
+    <table style='margin-left:30px'>
+        <tr>
+            <td><h3>{{dateselect}}:</h3></td>
+            <td style="width: 20%">
+                <md2-datepicker [(ngModel)]="startdate" type="date" placeholder="Anfangsdatum" format="YYYY-MM-DD" required>
+                </md2-datepicker>
+            </td>
+            <td style="width: 20%">
+                <md2-datepicker [(ngModel)]="enddate" type="date" placeholder="Enddatum" format="YYYY-MM-DD" required>
+                </md2-datepicker>
+            </td>
+            <td style="width: 20%">
+                <md-input #ExceptDate placeholder={{exceptselect}}></md-input>
+            </td>
+            <td>
+                <div style="color:red">
+                    <b>Im Format YYYY-MM-DD z.B: 2017-01-30,2017-01-05</b>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div style='margin-left:30px'>
+        <h3>{{observername}}</h3>
+        <md-radio-group [(ngModel)]="obsradio">
+            <div [style.background]="''">
+                <md-radio-button value="Alle" (change)="toggle('allobs')">{{allselect}}</md-radio-button>
+                <md-radio-button value="Nur von" (change)="toggle('')">{{onlyselect}}</md-radio-button>
+                <md-radio-button value="Außer von" (change)="toggle('')">{{exceptselect}}</md-radio-button>
+            </div>
+        </md-radio-group>
+        <div style="height:200px; width:95%; overflow-x:hidden; overflow-y: scroll; padding-bottom:10px;padding-left:20px;background-color:#80b3ff;">
+            <md-grid-list cols="6" rowHeight="4:2">
+                <md-grid-tile *ngFor="let obs of obserlist">
+                    <label>
+                        <input type="checkbox" value={{obs[0].id}} [checked]='alleobs' class="obscheck" /> {{obs[0].name}}
+                    </label>
+                </md-grid-tile>
+            </md-grid-list>
+        </div>
+    </div>
+    <div style='margin-left:30px'>
+        <h3>{{placename}}</h3>
+        <md-radio-group [(ngModel)]="arearadio">
+            <md-radio-button value="Alle" (change)="togglearea('allarea')">{{allselect}}</md-radio-button>
+            <md-radio-button value="Nur von" (change)="togglearea('')">{{onlyselect}}</md-radio-button>
+            <md-radio-button value="Außer von" (change)="togglearea('')">{{exceptselect}}</md-radio-button>
+        </md-radio-group>
+        <div style="height:200px; width:95%;overflow-x:hidden; overflow-y: scroll; padding-bottom:10px;padding-left:20px;background-color: #80b3ff ;">
+            <md-grid-list cols="8" rowHeight="4:2">
+                <md-grid-tile *ngFor="let area of arealist">
+                    <label>
+                        <input type="checkbox" value={{area[0].name}} [checked]='allearea' class="areacheck" />{{area[0].name}}
+                    </label>
+                </md-grid-tile>
+            </md-grid-list>
+        </div>
+    </div>
+    <div style='margin-left:30px'>
+        <h3>{{shiftname}}</h3>
+        <label>
+            <input type="checkbox" value='1' class="shiftcheck" [checked]="true" />{{earlyshift}}
+        </label>
+        <label>
+            <input type="checkbox" value='2' class="shiftcheck" [checked]="true" /> {{lateshift}}
+        </label>
+        <label>
+            <input type="checkbox" value='3' class="shiftcheck" [checked]="true" />{{nightshift}}
+        </label>
+    </div>
+    <div *ngIf="edited==true">
+        <div style='margin-left:30px'>
+            <h3>{{empfunction}}</h3>
+            <md-radio-group [(ngModel)]="funcradio">
+                <md-radio-button value="Alle" (change)="togglefunc('allfunc')">{{allselect}}</md-radio-button>
+                <md-radio-button value="Nur von" (change)="togglefunc('')">{{onlyselect}}</md-radio-button>
+                <md-radio-button value="Außer von" (change)="togglefunc('')">{{exceptselect}}</md-radio-button>
+            </md-radio-group>
+            <div style="height:200px; width:95%; overflow-x:hidden; overflow-y: scroll; padding-bottom:10px;padding-left:20px;background-color:#80b3ff;">
+                <md-grid-list cols="6" rowHeight="6:2">
+                    <md-grid-tile *ngFor="let func of Functionlist ">
+                        <label>
+                            <input type="checkbox" value={{func}} [checked]='allefunc' class="funccheck" />{{func}}
+                        </label>
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+        </div>
+        <div style='margin-left:30px'>
+            <h3>{{machinestation}}</h3>
+            <md-radio-group [(ngModel)]="ortradio">
+                <md-radio-button value="Alle" (change)="toggleplace('allplace')">{{allselect}}</md-radio-button>
+                <md-radio-button value="Nur von" (change)="toggleplace('')">{{onlyselect}}</md-radio-button>
+                <md-radio-button value="Außer von" (change)="toggleplace('')">{{exceptselect}}</md-radio-button>
+            </md-radio-group>
+            <div style="height:200px; width:95%;overflow-x:hidden; overflow-y: scroll; padding-bottom:10px;padding-left:20px;background-color:#80b3ff;">
+                <md-grid-list cols="6" rowHeight="6:2">
+                    <md-grid-tile *ngFor="let ort of ortlist">
+                        <label>
+                            <input type="checkbox" value={{ort[0].name}} [checked]='alleplace' class="ortcheck" />{{ort[0].name}}
+                        </label>
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+        </div>
+        <div style='margin-left:30px'>
+            <h3>{{empactivity}}</h3>
+            <md-radio-group [(ngModel)]="actradio">
+                <md-radio-button value="Alle" (change)="toggleactivity('allactivity')">{{allselect}}</md-radio-button>
+                <md-radio-button value="Nur von" (change)="toggleactivity('')">{{onlyselect}}</md-radio-button>
+                <md-radio-button value="Außer von" (change)="toggleactivity('')">{{exceptselect}}</md-radio-button>
+            </md-radio-group>
+            <div style="height:200px; width:95%;overflow-x:hidden; overflow-y: scroll; padding-bottom:10px;padding-left:20px;background-color:#80b3ff;">
+                <md-grid-list cols="6" rowHeight="8:4">
+                    <md-grid-tile *ngFor="let activity of activities">
+                        @*<md-checkbox md-no-ink aria-label="Checkbox No Ink" [checked]='alleactivity' class="md-primary">
+                                {{activity}}
+                            </md-checkbox>*@
+                        <label>
+                            <input type="checkbox" value= {{activity[0].name}} [checked]='alleactivity' class="actcheck" />{{activity[0].name}}
+                        </label>
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+        </div>
+        <div>
+            <button (click)="(startdate == undefined || enddate == undefined || obsradio == undefined || arearadio == undefined || actradio == undefined || funcradio == undefined || ortradio == undefined) ? alert.show() : goToViewReport(startdate,enddate,obsradio,arearadio,actradio,funcradio,ortradio,ExceptDate.value)" md-raised-button style='margin: 20px;height:100px;width:200px;vertical-align:middle;background-color:#000080;color:white;'>
+                {{send}}
+            </button>
+        </div>
+    </div>
+    <div *ngIf="edited==false">
+        <div style='margin-left:30px'>
+            <h3>{{machinestation}}</h3>
+            <md-radio-group [(ngModel)]="machradio">
+                <md-radio-button value="Alle" (click)="togglemachine('allmachine')">{{allselect}}</md-radio-button>
+                <md-radio-button value="Nur von" (click)="togglemachine('')">{{onlyselect}}</md-radio-button>
+                <md-radio-button value="Außer von" (click)="togglemachine('')">{{exceptselect}}</md-radio-button>
+            </md-radio-group>
+            <div style="height:200px; width:95%;overflow-x:hidden; overflow-y: scroll; padding-bottom:10px;padding-left:20px;background-color:#80b3ff;">
+                <md-grid-list cols="6" rowHeight="6:2">
+                    <md-grid-tile *ngFor="let machine of Machinelist">
+                        <label>
+                            <input type="checkbox" value={{machine[0].name}} [checked]='allemachine' class="machinecheck" />{{machine[0].name}}
+                        </label>
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+        </div>
+        <div style='margin-left:30px'>
+            <h3>{{machinestate}}</h3>
+            <md-radio-group [(ngModel)]="stateradio">
+                <md-radio-button value="Alle" (click)="togglestate('allstate')">{{allselect}}</md-radio-button>
+                <md-radio-button value="Nur von" (click)="togglestate('')">{{onlyselect}}</md-radio-button>
+                <md-radio-button value="Außer von" (click)="togglestate('')">{{exceptselect}}</md-radio-button>
+            </md-radio-group>
+            <div style="height:200px; width:95%; overflow-x:hidden; overflow-y: scroll; padding-bottom:10px;padding-left:20px;background-color:#80b3ff;">
+                <md-grid-list cols="8" rowHeight="4:2">
+                    <md-grid-tile *ngFor="let state of MachineStatelist">
+                        <label>
+                            <input type="checkbox" value={{state[0].name}} [checked]='allestate' class="statecheck" />{{state[0].name}}
+                        </label>
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+        </div>
+        <button (click)="(startdate == undefined || enddate == undefined || obsradio == undefined || arearadio == undefined || machradio == undefined || stateradio == undefined) ? alert.show() : goToViewReportMachine(startdate,enddate,obsradio,arearadio,machradio,stateradio,ExceptDate.value)" md-raised-button style='margin: 20px;height:100px;width:200px;vertical-align:middle;background-color:#000080;color:white;'>
+            {{send}}
+        </button>
+    </div>
+    <md2-dialog #alert>
+        <md2-dialog-title>{{warning}}!!!</md2-dialog-title>
+        <div style="color:red">{{fillall}}</div>
+        <md2-dialog-footer>
+            <button md-raised-button (click)="alert.close()">{{cancel}}</button>
+        </md2-dialog-footer>
+    </md2-dialog>
+</section>
+
+
+@*This Section is used to show the analysis of the report in pop up*@
+<button id="openReportView" [hidden]="true" data-toggle="modal" (click)="reportview.show()">Open Modal</button>
+<md2-dialog #reportview>
+    <md2-dialog-title>{{report}}</md2-dialog-title>
+    <div id="Print">
+        <b><ins>{{report}} - MMA <mark>von {{date}}</mark></ins></b>
+        @*Check if the report is for Employee*@
+        <div *ngIf="reportparam == 'employee'">
+            <table id="Table" cellspacing="20">
+                <thead>
+                    <tr>
+                        <th>{{process}}</th>
+                        <th>{{observations}}</th>
+                        <th>{{proportion}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{total}}</td>
+                        <td>{{reportlist[5]}}</td>
+                        <td>100%</td>
+                    </tr>
+                    <tr>
+                        <td>{{placename}}</td>
+                        <td>{{reportlist[6]}}</td>
+                        <td>{{reportlist[0]}}%</td>
+                    </tr>
+                    <tr>
+                        <td>{{shiftname}}</td>
+                        <td>{{reportlist[7]}}</td>
+                        <td>{{reportlist[1]}}%</td>
+                    </tr>
+                    <tr>
+                        <td>{{empfunction}}</td>
+                        <td>{{reportlist[8]}}</td>
+                        <td>{{reportlist[2]}}%</td>
+                    </tr>
+                    <tr>
+                        <td>{{machinestation}}</td>
+                        <td>{{reportlist[9]}}</td>
+                        <td>{{reportlist[3]}}%</td>
+                    </tr>
+                    <tr>
+                        <td>{{empactivity}}</td>
+                        <td>{{reportlist[10]}}</td>
+                        <td>{{reportlist[4]}}%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <md-card [style.background]="'#b3c6ff'">
+                <b>{{dateselect}}:</b> {{date}}  &nbsp;
+                <b>{{observername}}:</b> {{observer}}  &nbsp;
+                <b>{{placename}}:</b> {{area}}  &nbsp;
+                <b>{{shiftname}}:</b> {{shift}}  &nbsp;
+                <b>{{empfunction}}:</b> {{function}}  &nbsp;
+                <b>{{machinestation}}:</b> {{ort}}  &nbsp;
+                <b>{{empactivity}}:</b> {{activity}}  &nbsp;
+            </md-card>
+        </div>
+        @*Check if the report is for Machines*@
+        <div *ngIf="reportparam == 'machine'">
+            <table id="Table" cellspacing="20">
+                <tr>
+                    <th>{{process}}</th>
+                    <th>{{observations}}</th>
+                    <th>{{proportion}}</th>
+                </tr>
+                <tr>
+                    <td>{{total}}</td>
+                    <td>{{reportlist[4]}}</td>
+                    <td>100%</td>
+                </tr>
+                <tr>
+                    <td>{{placename}}</td>
+                    <td>{{reportlist[5]}}</td>
+                    <td>{{reportlist[0]}}%</td>
+                </tr>
+                <tr>
+                    <td>{{shiftname}}</td>
+                    <td>{{reportlist[6]}}</td>
+                    <td>{{reportlist[1]}}%</td>
+                </tr>
+                <tr>
+                    <td>{{machinestation}}</td>
+                    <td>{{reportlist[7]}}</td>
+                    <td>{{reportlist[2]}}%</td>
+                </tr>
+                <tr>
+                    <td>{{machinestate}}</td>
+                    <td>{{reportlist[8]}}</td>
+                    <td>{{reportlist[3]}}%</td>
+                </tr>
+
+            </table>
+            <md-card style="margin-top:40px;" [style.background]="'#b3c6ff'">
+                <b>{{dateselect}}:</b> {{date}}  &nbsp;
+                <b>{{observername}}:</b> {{observer}}  &nbsp;
+                <b>{{placename}}:</b> {{area}}  &nbsp;
+                <b>{{shiftname}}:</b> {{shift}}  &nbsp;
+                <b>{{machinestation}}:</b> {{machine}}  &nbsp;
+                <b>{{machinestate}}:</b> {{state}}  &nbsp;
+            </md-card>
+        </div>
+    </div>
+    <md2-dialog-footer>
+        @*This button is for printing the report*@
+        <button md-raised-button (click)='printPDF()'>
+            <svg class="svg-icon" width="30px" height="30px" viewBox="0 0 20 20">
+                <path d="M17.453,12.691V7.723 M17.453,12.691V7.723 M1.719,12.691V7.723 M18.281,12.691V7.723 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M16.625,6.066h-1.449V3.168c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.187-0.414,0.414v2.898H3.375c-0.913,0-1.656,0.743-1.656,1.656v4.969c0,0.913,0.743,1.656,1.656,1.656h1.449v2.484c0,0.228,0.187,0.414,0.414,0.414h9.523c0.229,0,0.414-0.187,0.414-0.414v-2.484h1.449c0.912,0,1.656-0.743,1.656-1.656V7.723C18.281,6.81,17.537,6.066,16.625,6.066 M5.652,3.582h8.695v2.484H5.652V3.582zM14.348,16.418H5.652v-4.969h8.695V16.418z M17.453,12.691c0,0.458-0.371,0.828-0.828,0.828h-1.449v-2.484c0-0.228-0.186-0.414-0.414-0.414H5.238c-0.228,0-0.414,0.186-0.414,0.414v2.484H3.375c-0.458,0-0.828-0.37-0.828-0.828V7.723c0-0.458,0.371-0.828,0.828-0.828h13.25c0.457,0,0.828,0.371,0.828,0.828V12.691z M7.309,13.312h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,13.312,7.309,13.312M7.309,15.383h5.383c0.229,0,0.414-0.187,0.414-0.414s-0.186-0.414-0.414-0.414H7.309c-0.228,0-0.414,0.187-0.414,0.414S7.081,15.383,7.309,15.383 M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484 M12.691,12.484H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,12.484,12.691,12.484M12.691,14.555H7.309c-0.228,0-0.414,0.187-0.414,0.414s0.187,0.414,0.414,0.414h5.383c0.229,0,0.414-0.187,0.414-0.414S12.92,14.555,12.691,14.555"></path>
+            </svg>
+            {{printreport}}
+        </button>
+        @*This button and frame is for export table to excel*@
+        <iframe id="txtArea1" style="display:none"></iframe>
+        <button md-raised-button color="success" id="btnExport" (click)='fnExcelReport()'>
+            <svg class="svg-icon" width="30px" height="30px" viewBox="0 0 20 20">
+                <path d="M15.475,6.692l-4.084-4.083C11.32,2.538,11.223,2.5,11.125,2.5h-6c-0.413,0-0.75,0.337-0.75,0.75v13.5c0,0.412,0.337,0.75,0.75,0.75h9.75c0.412,0,0.75-0.338,0.75-0.75V6.94C15.609,6.839,15.554,6.771,15.475,6.692 M11.5,3.779l2.843,2.846H11.5V3.779z M14.875,16.75h-9.75V3.25h5.625V7c0,0.206,0.168,0.375,0.375,0.375h3.75V16.75z"></path>
+            </svg>
+            Excel
+        </button>
+    </md2-dialog-footer>
+</md2-dialog>

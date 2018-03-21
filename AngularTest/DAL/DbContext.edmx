@@ -1,0 +1,941 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="mmsdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MMS_Beobachter">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Vorname" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MMS_Beobachtertouren">
+          <Key>
+            <PropertyRef Name="Beobachter_ID" />
+            <PropertyRef Name="Bereich_ID" />
+            <PropertyRef Name="Tourart" />
+            <PropertyRef Name="Datum" />
+          </Key>
+          <Property Name="Beobachter_ID" Type="int" Nullable="false" />
+          <Property Name="Bereich_ID" Type="int" Nullable="false" />
+          <Property Name="Tourart" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Datum" Type="datetime" Nullable="false" />
+          <Property Name="Tourreihenfolge" Type="varchar(max)" />
+          <Property Name="Mitarbeiterliste" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'mmsdb.dbo.MMS_BeoMitId' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="MMS_BeoMitId">
+          <Property Name="Beo_ID" Type="int" />
+          <Property Name="Mit_ID" Type="int" />
+        </EntityType>-->
+        <EntityType Name="MMS_Bereich">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bereich" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'mmsdb.dbo.MMS_MaschineData' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="MMS_MaschineData">
+          <Property Name="Beo_ID" Type="int" />
+          <Property Name="Datum" Type="varchar" MaxLength="100" />
+          <Property Name="Schicht" Type="varchar" MaxLength="100" />
+          <Property Name="Bereich" Type="varchar" MaxLength="100" />
+          <Property Name="Maschine" Type="varchar" MaxLength="100" />
+          <Property Name="Zustand" Type="varchar" MaxLength="100" />
+        </EntityType>-->
+        <EntityType Name="MMS_Maschinenbeobachtung">
+          <Key>
+            <PropertyRef Name="Beobachter_ID" />
+            <PropertyRef Name="Datum" />
+            <PropertyRef Name="Maschinenort_ID" />
+          </Key>
+          <Property Name="Beobachter_ID" Type="int" Nullable="false" />
+          <Property Name="Datum" Type="datetime" Nullable="false" />
+          <Property Name="Maschinenort_ID" Type="int" Nullable="false" />
+          <Property Name="Maschinenzustand_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="MMS_Maschinenzustand">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Zustand" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MMS_Mitarbeiter">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Vorname" Type="varchar" MaxLength="50" />
+          <Property Name="Funktion_ID" Type="int" />
+          <Property Name="Bereich" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MMS_Mitarbeiterbeobachtung">
+          <Key>
+            <PropertyRef Name="Beobachter_ID" />
+            <PropertyRef Name="Datum" />
+            <PropertyRef Name="Mitarbeiter_ID" />
+          </Key>
+          <Property Name="Beobachter_ID" Type="int" Nullable="false" />
+          <Property Name="Datum" Type="datetime" Nullable="false" />
+          <Property Name="Mitarbeiter_ID" Type="int" Nullable="false" />
+          <Property Name="Taetigkeit_ID" Type="int" />
+          <Property Name="Bereich_ID" Type="int" />
+          <Property Name="Ort_ID" Type="int" />
+          <Property Name="Funktion_ID" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'mmsdb.dbo.MMS_MitarbeiterData' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="MMS_MitarbeiterData">
+          <Property Name="Beo_ID" Type="int" />
+          <Property Name="Datum" Type="varchar" MaxLength="100" />
+          <Property Name="Schicht" Type="varchar" MaxLength="100" />
+          <Property Name="Bereich" Type="varchar" MaxLength="100" />
+          <Property Name="Ort" Type="varchar" MaxLength="100" />
+          <Property Name="Funktion" Type="varchar" MaxLength="100" />
+          <Property Name="Taegtigkeit" Type="varchar" MaxLength="100" />
+        </EntityType>-->
+        <EntityType Name="MMS_Mitarbeiterfunktion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Funktion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MMS_Oberort_Unterort">
+          <Key>
+            <PropertyRef Name="Oberort" />
+            <PropertyRef Name="Unterort" />
+          </Key>
+          <Property Name="Oberort" Type="int" Nullable="false" />
+          <Property Name="Unterort" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MMS_Obertaetigkeit_Untertaetigkeit">
+          <Key>
+            <PropertyRef Name="Obertaetigkeit" />
+            <PropertyRef Name="Untertaetigkeit" />
+          </Key>
+          <Property Name="Obertaetigkeit" Type="int" Nullable="false" />
+          <Property Name="Untertaetigkeit" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MMS_Ort">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bereich_ID" Type="int" />
+          <Property Name="Bezeichnung" Type="varchar" MaxLength="50" />
+          <Property Name="Typ" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="MMS_Taetigkeit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Taetigkeit" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'mmsdb.dbo.MMS_Time' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="MMS_Time">
+          <Property Name="Time" Type="varchar" MaxLength="50" />
+          <Property Name="Bereich" Type="varchar" MaxLength="50" />
+          <Property Name="Tour" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+        <EntityType Name="MMS_Tourinformation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bereich_ID" Type="int" />
+          <Property Name="Art" Type="varchar" MaxLength="50" />
+          <Property Name="Dauer" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+error 6004: The table 'mmsdb.dbo.MMS_BeoMitId' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__MMS_BeoMi__Beo_I__6FE99F9F" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'mmsdb.dbo.MMS_BeoMitId' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__MMS_BeoMi__Mit_I__70DDC3D8" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'mmsdb.dbo.MMS_MaschineData' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__MMS_Masch__Beo_I__03F0984C" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'mmsdb.dbo.MMS_MitarbeiterData' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__MMS_Mitar__Beo_I__02084FDA" />-->
+        <Association Name="FK_MMS_Beobachtertouren_MMS_Beobachter">
+          <End Role="MMS_Beobachter" Type="Self.MMS_Beobachter" Multiplicity="1" />
+          <End Role="MMS_Beobachtertouren" Type="Self.MMS_Beobachtertouren" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Beobachter">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Beobachtertouren">
+              <PropertyRef Name="Beobachter_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Beobachtertouren_MMS_Bereich">
+          <End Role="MMS_Bereich" Type="Self.MMS_Bereich" Multiplicity="1" />
+          <End Role="MMS_Beobachtertouren" Type="Self.MMS_Beobachtertouren" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Bereich">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Beobachtertouren">
+              <PropertyRef Name="Bereich_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Maschinenbeobachtung_MMS_Maschinenbeobachtung">
+          <End Role="MMS_Maschinenbeobachtung" Type="Self.MMS_Maschinenbeobachtung" Multiplicity="1" />
+          <End Role="MMS_Maschinenbeobachtung1" Type="Self.MMS_Maschinenbeobachtung" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Maschinenbeobachtung">
+              <PropertyRef Name="Beobachter_ID" />
+              <PropertyRef Name="Maschinenort_ID" />
+              <PropertyRef Name="Datum" />
+            </Principal>
+            <Dependent Role="MMS_Maschinenbeobachtung1">
+              <PropertyRef Name="Beobachter_ID" />
+              <PropertyRef Name="Maschinenort_ID" />
+              <PropertyRef Name="Datum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Mitarbeiter_MMS_Mitarbeiter">
+          <End Role="MMS_Mitarbeiter" Type="Self.MMS_Mitarbeiter" Multiplicity="1" />
+          <End Role="MMS_Mitarbeiter1" Type="Self.MMS_Mitarbeiter" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Mitarbeiter">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Mitarbeiter1">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Beobachter">
+          <End Role="MMS_Beobachter" Type="Self.MMS_Beobachter" Multiplicity="1" />
+          <End Role="MMS_Mitarbeiterbeobachtung" Type="Self.MMS_Mitarbeiterbeobachtung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Beobachter">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Mitarbeiterbeobachtung">
+              <PropertyRef Name="Beobachter_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Bereich">
+          <End Role="MMS_Bereich" Type="Self.MMS_Bereich" Multiplicity="0..1" />
+          <End Role="MMS_Mitarbeiterbeobachtung" Type="Self.MMS_Mitarbeiterbeobachtung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Bereich">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Mitarbeiterbeobachtung">
+              <PropertyRef Name="Bereich_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Mitarbeiterfunktion">
+          <End Role="MMS_Mitarbeiterfunktion" Type="Self.MMS_Mitarbeiterfunktion" Multiplicity="0..1" />
+          <End Role="MMS_Mitarbeiterbeobachtung" Type="Self.MMS_Mitarbeiterbeobachtung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Mitarbeiterfunktion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Mitarbeiterbeobachtung">
+              <PropertyRef Name="Funktion_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Ort">
+          <End Role="MMS_Ort" Type="Self.MMS_Ort" Multiplicity="0..1" />
+          <End Role="MMS_Mitarbeiterbeobachtung" Type="Self.MMS_Mitarbeiterbeobachtung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Ort">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Mitarbeiterbeobachtung">
+              <PropertyRef Name="Ort_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Taetigkeit">
+          <End Role="MMS_Taetigkeit" Type="Self.MMS_Taetigkeit" Multiplicity="0..1" />
+          <End Role="MMS_Mitarbeiterbeobachtung" Type="Self.MMS_Mitarbeiterbeobachtung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Taetigkeit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Mitarbeiterbeobachtung">
+              <PropertyRef Name="Taetigkeit_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Oberort_Unterort_MMS_Ort">
+          <End Role="MMS_Ort" Type="Self.MMS_Ort" Multiplicity="1" />
+          <End Role="MMS_Oberort_Unterort" Type="Self.MMS_Oberort_Unterort" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Ort">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Oberort_Unterort">
+              <PropertyRef Name="Oberort" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Oberort_Unterort_MMS_Ort1">
+          <End Role="MMS_Ort" Type="Self.MMS_Ort" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MMS_Oberort_Unterort" Type="Self.MMS_Oberort_Unterort" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Ort">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Oberort_Unterort">
+              <PropertyRef Name="Unterort" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Obertaetigkeit_Untertaetigkeit_MMS_Taetigkeit1">
+          <End Role="MMS_Taetigkeit" Type="Self.MMS_Taetigkeit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MMS_Obertaetigkeit_Untertaetigkeit" Type="Self.MMS_Obertaetigkeit_Untertaetigkeit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Taetigkeit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Obertaetigkeit_Untertaetigkeit">
+              <PropertyRef Name="Untertaetigkeit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Ort_MMS_Bereich">
+          <End Role="MMS_Bereich" Type="Self.MMS_Bereich" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MMS_Ort" Type="Self.MMS_Ort" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Bereich">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Ort">
+              <PropertyRef Name="Bereich_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Tourinformation_MMS_Bereich">
+          <End Role="MMS_Bereich" Type="Self.MMS_Bereich" Multiplicity="0..1" />
+          <End Role="MMS_Tourinformation" Type="Self.MMS_Tourinformation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Bereich">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Tourinformation">
+              <PropertyRef Name="Bereich_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="mmsdbModelStoreContainer">
+          <EntitySet Name="MMS_Beobachter" EntityType="Self.MMS_Beobachter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Beobachtertouren" EntityType="Self.MMS_Beobachtertouren" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Bereich" EntityType="Self.MMS_Bereich" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Maschinenbeobachtung" EntityType="Self.MMS_Maschinenbeobachtung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Maschinenzustand" EntityType="Self.MMS_Maschinenzustand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Mitarbeiter" EntityType="Self.MMS_Mitarbeiter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Mitarbeiterbeobachtung" EntityType="Self.MMS_Mitarbeiterbeobachtung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Mitarbeiterfunktion" EntityType="Self.MMS_Mitarbeiterfunktion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Oberort_Unterort" EntityType="Self.MMS_Oberort_Unterort" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Obertaetigkeit_Untertaetigkeit" EntityType="Self.MMS_Obertaetigkeit_Untertaetigkeit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Ort" EntityType="Self.MMS_Ort" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Taetigkeit" EntityType="Self.MMS_Taetigkeit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MMS_Tourinformation" EntityType="Self.MMS_Tourinformation" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MMS_Beobachtertouren_MMS_Beobachter" Association="Self.FK_MMS_Beobachtertouren_MMS_Beobachter">
+            <End Role="MMS_Beobachter" EntitySet="MMS_Beobachter" />
+            <End Role="MMS_Beobachtertouren" EntitySet="MMS_Beobachtertouren" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Beobachtertouren_MMS_Bereich" Association="Self.FK_MMS_Beobachtertouren_MMS_Bereich">
+            <End Role="MMS_Bereich" EntitySet="MMS_Bereich" />
+            <End Role="MMS_Beobachtertouren" EntitySet="MMS_Beobachtertouren" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Maschinenbeobachtung_MMS_Maschinenbeobachtung" Association="Self.FK_MMS_Maschinenbeobachtung_MMS_Maschinenbeobachtung">
+            <End Role="MMS_Maschinenbeobachtung" EntitySet="MMS_Maschinenbeobachtung" />
+            <End Role="MMS_Maschinenbeobachtung1" EntitySet="MMS_Maschinenbeobachtung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Mitarbeiter_MMS_Mitarbeiter" Association="Self.FK_MMS_Mitarbeiter_MMS_Mitarbeiter">
+            <End Role="MMS_Mitarbeiter" EntitySet="MMS_Mitarbeiter" />
+            <End Role="MMS_Mitarbeiter1" EntitySet="MMS_Mitarbeiter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Beobachter" Association="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Beobachter">
+            <End Role="MMS_Beobachter" EntitySet="MMS_Beobachter" />
+            <End Role="MMS_Mitarbeiterbeobachtung" EntitySet="MMS_Mitarbeiterbeobachtung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Bereich" Association="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Bereich">
+            <End Role="MMS_Bereich" EntitySet="MMS_Bereich" />
+            <End Role="MMS_Mitarbeiterbeobachtung" EntitySet="MMS_Mitarbeiterbeobachtung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Mitarbeiterfunktion" Association="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Mitarbeiterfunktion">
+            <End Role="MMS_Mitarbeiterfunktion" EntitySet="MMS_Mitarbeiterfunktion" />
+            <End Role="MMS_Mitarbeiterbeobachtung" EntitySet="MMS_Mitarbeiterbeobachtung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Ort" Association="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Ort">
+            <End Role="MMS_Ort" EntitySet="MMS_Ort" />
+            <End Role="MMS_Mitarbeiterbeobachtung" EntitySet="MMS_Mitarbeiterbeobachtung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Taetigkeit" Association="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Taetigkeit">
+            <End Role="MMS_Taetigkeit" EntitySet="MMS_Taetigkeit" />
+            <End Role="MMS_Mitarbeiterbeobachtung" EntitySet="MMS_Mitarbeiterbeobachtung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Oberort_Unterort_MMS_Ort" Association="Self.FK_MMS_Oberort_Unterort_MMS_Ort">
+            <End Role="MMS_Ort" EntitySet="MMS_Ort" />
+            <End Role="MMS_Oberort_Unterort" EntitySet="MMS_Oberort_Unterort" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Oberort_Unterort_MMS_Ort1" Association="Self.FK_MMS_Oberort_Unterort_MMS_Ort1">
+            <End Role="MMS_Ort" EntitySet="MMS_Ort" />
+            <End Role="MMS_Oberort_Unterort" EntitySet="MMS_Oberort_Unterort" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Obertaetigkeit_Untertaetigkeit_MMS_Taetigkeit1" Association="Self.FK_MMS_Obertaetigkeit_Untertaetigkeit_MMS_Taetigkeit1">
+            <End Role="MMS_Taetigkeit" EntitySet="MMS_Taetigkeit" />
+            <End Role="MMS_Obertaetigkeit_Untertaetigkeit" EntitySet="MMS_Obertaetigkeit_Untertaetigkeit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Ort_MMS_Bereich" Association="Self.FK_MMS_Ort_MMS_Bereich">
+            <End Role="MMS_Bereich" EntitySet="MMS_Bereich" />
+            <End Role="MMS_Ort" EntitySet="MMS_Ort" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Tourinformation_MMS_Bereich" Association="Self.FK_MMS_Tourinformation_MMS_Bereich">
+            <End Role="MMS_Bereich" EntitySet="MMS_Bereich" />
+            <End Role="MMS_Tourinformation" EntitySet="MMS_Tourinformation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="mmsdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MMS_Beobachter">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Vorname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MMS_Beobachtertouren" Relationship="Self.FK_MMS_Beobachtertouren_MMS_Beobachter" FromRole="MMS_Beobachter" ToRole="MMS_Beobachtertouren" />
+          <NavigationProperty Name="MMS_Mitarbeiterbeobachtung" Relationship="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Beobachter" FromRole="MMS_Beobachter" ToRole="MMS_Mitarbeiterbeobachtung" />
+        </EntityType>
+        <EntityType Name="MMS_Beobachtertouren">
+          <Key>
+            <PropertyRef Name="Beobachter_ID" />
+            <PropertyRef Name="Bereich_ID" />
+            <PropertyRef Name="Tourart" />
+            <PropertyRef Name="Datum" />
+          </Key>
+          <Property Name="Beobachter_ID" Type="Int32" Nullable="false" />
+          <Property Name="Bereich_ID" Type="Int32" Nullable="false" />
+          <Property Name="Tourart" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Tourreihenfolge" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Mitarbeiterliste" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MMS_Beobachter" Relationship="Self.FK_MMS_Beobachtertouren_MMS_Beobachter" FromRole="MMS_Beobachtertouren" ToRole="MMS_Beobachter" />
+          <NavigationProperty Name="MMS_Bereich" Relationship="Self.FK_MMS_Beobachtertouren_MMS_Bereich" FromRole="MMS_Beobachtertouren" ToRole="MMS_Bereich" />
+        </EntityType>
+        <EntityType Name="MMS_Bereich">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bereich" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MMS_Beobachtertouren" Relationship="Self.FK_MMS_Beobachtertouren_MMS_Bereich" FromRole="MMS_Bereich" ToRole="MMS_Beobachtertouren" />
+          <NavigationProperty Name="MMS_Mitarbeiterbeobachtung" Relationship="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Bereich" FromRole="MMS_Bereich" ToRole="MMS_Mitarbeiterbeobachtung" />
+          <NavigationProperty Name="MMS_Ort" Relationship="Self.FK_MMS_Ort_MMS_Bereich" FromRole="MMS_Bereich" ToRole="MMS_Ort" />
+          <NavigationProperty Name="MMS_Tourinformation" Relationship="Self.FK_MMS_Tourinformation_MMS_Bereich" FromRole="MMS_Bereich" ToRole="MMS_Tourinformation" />
+        </EntityType>
+        <EntityType Name="MMS_Maschinenbeobachtung">
+          <Key>
+            <PropertyRef Name="Beobachter_ID" />
+            <PropertyRef Name="Datum" />
+            <PropertyRef Name="Maschinenort_ID" />
+          </Key>
+          <Property Name="Beobachter_ID" Type="Int32" Nullable="false" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Maschinenort_ID" Type="Int32" Nullable="false" />
+          <Property Name="Maschinenzustand_ID" Type="Int32" />
+          <NavigationProperty Name="MMS_Maschinenbeobachtung1" Relationship="Self.FK_MMS_Maschinenbeobachtung_MMS_Maschinenbeobachtung" FromRole="MMS_Maschinenbeobachtung" ToRole="MMS_Maschinenbeobachtung1" />
+          <NavigationProperty Name="MMS_Maschinenbeobachtung2" Relationship="Self.FK_MMS_Maschinenbeobachtung_MMS_Maschinenbeobachtung" FromRole="MMS_Maschinenbeobachtung1" ToRole="MMS_Maschinenbeobachtung" />
+        </EntityType>
+        <EntityType Name="MMS_Maschinenzustand">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Zustand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MMS_Mitarbeiter">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Vorname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Funktion_ID" Type="Int32" />
+          <Property Name="Bereich" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MMS_Mitarbeiter1" Relationship="Self.FK_MMS_Mitarbeiter_MMS_Mitarbeiter" FromRole="MMS_Mitarbeiter" ToRole="MMS_Mitarbeiter1" />
+          <NavigationProperty Name="MMS_Mitarbeiter2" Relationship="Self.FK_MMS_Mitarbeiter_MMS_Mitarbeiter" FromRole="MMS_Mitarbeiter1" ToRole="MMS_Mitarbeiter" />
+        </EntityType>
+        <EntityType Name="MMS_Mitarbeiterbeobachtung">
+          <Key>
+            <PropertyRef Name="Beobachter_ID" />
+            <PropertyRef Name="Datum" />
+            <PropertyRef Name="Mitarbeiter_ID" />
+          </Key>
+          <Property Name="Beobachter_ID" Type="Int32" Nullable="false" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Mitarbeiter_ID" Type="Int32" Nullable="false" />
+          <Property Name="Taetigkeit_ID" Type="Int32" />
+          <Property Name="Bereich_ID" Type="Int32" />
+          <Property Name="Ort_ID" Type="Int32" />
+          <Property Name="Funktion_ID" Type="Int32" />
+          <NavigationProperty Name="MMS_Beobachter" Relationship="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Beobachter" FromRole="MMS_Mitarbeiterbeobachtung" ToRole="MMS_Beobachter" />
+          <NavigationProperty Name="MMS_Bereich" Relationship="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Bereich" FromRole="MMS_Mitarbeiterbeobachtung" ToRole="MMS_Bereich" />
+          <NavigationProperty Name="MMS_Mitarbeiterfunktion" Relationship="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Mitarbeiterfunktion" FromRole="MMS_Mitarbeiterbeobachtung" ToRole="MMS_Mitarbeiterfunktion" />
+          <NavigationProperty Name="MMS_Ort" Relationship="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Ort" FromRole="MMS_Mitarbeiterbeobachtung" ToRole="MMS_Ort" />
+          <NavigationProperty Name="MMS_Taetigkeit" Relationship="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Taetigkeit" FromRole="MMS_Mitarbeiterbeobachtung" ToRole="MMS_Taetigkeit" />
+        </EntityType>
+        <EntityType Name="MMS_Mitarbeiterfunktion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Funktion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MMS_Mitarbeiterbeobachtung" Relationship="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Mitarbeiterfunktion" FromRole="MMS_Mitarbeiterfunktion" ToRole="MMS_Mitarbeiterbeobachtung" />
+        </EntityType>
+        <EntityType Name="MMS_Obertaetigkeit_Untertaetigkeit">
+          <Key>
+            <PropertyRef Name="Obertaetigkeit" />
+            <PropertyRef Name="Untertaetigkeit" />
+          </Key>
+          <Property Name="Obertaetigkeit" Type="Int32" Nullable="false" />
+          <Property Name="Untertaetigkeit" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MMS_Taetigkeit" Relationship="Self.FK_MMS_Obertaetigkeit_Untertaetigkeit_MMS_Taetigkeit1" FromRole="MMS_Obertaetigkeit_Untertaetigkeit" ToRole="MMS_Taetigkeit" />
+        </EntityType>
+        <EntityType Name="MMS_Ort">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bereich_ID" Type="Int32" />
+          <Property Name="Bezeichnung" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Typ" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MMS_Bereich" Relationship="Self.FK_MMS_Ort_MMS_Bereich" FromRole="MMS_Ort" ToRole="MMS_Bereich" />
+          <NavigationProperty Name="MMS_Mitarbeiterbeobachtung" Relationship="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Ort" FromRole="MMS_Ort" ToRole="MMS_Mitarbeiterbeobachtung" />
+          <NavigationProperty Name="MMS_Ort1" Relationship="Self.MMS_Oberort_Unterort" FromRole="MMS_Ort" ToRole="MMS_Ort1" />
+          <NavigationProperty Name="MMS_Ort2" Relationship="Self.MMS_Oberort_Unterort" FromRole="MMS_Ort1" ToRole="MMS_Ort" />
+        </EntityType>
+        <EntityType Name="MMS_Taetigkeit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Taetigkeit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MMS_Mitarbeiterbeobachtung" Relationship="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Taetigkeit" FromRole="MMS_Taetigkeit" ToRole="MMS_Mitarbeiterbeobachtung" />
+          <NavigationProperty Name="MMS_Obertaetigkeit_Untertaetigkeit" Relationship="Self.FK_MMS_Obertaetigkeit_Untertaetigkeit_MMS_Taetigkeit1" FromRole="MMS_Taetigkeit" ToRole="MMS_Obertaetigkeit_Untertaetigkeit" />
+        </EntityType>
+        <EntityType Name="MMS_Tourinformation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bereich_ID" Type="Int32" />
+          <Property Name="Art" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Dauer" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MMS_Bereich" Relationship="Self.FK_MMS_Tourinformation_MMS_Bereich" FromRole="MMS_Tourinformation" ToRole="MMS_Bereich" />
+        </EntityType>
+        <Association Name="FK_MMS_Beobachtertouren_MMS_Beobachter">
+          <End Role="MMS_Beobachter" Type="Self.MMS_Beobachter" Multiplicity="1" />
+          <End Role="MMS_Beobachtertouren" Type="Self.MMS_Beobachtertouren" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Beobachter">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Beobachtertouren">
+              <PropertyRef Name="Beobachter_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Beobachter">
+          <End Role="MMS_Beobachter" Type="Self.MMS_Beobachter" Multiplicity="1" />
+          <End Role="MMS_Mitarbeiterbeobachtung" Type="Self.MMS_Mitarbeiterbeobachtung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Beobachter">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Mitarbeiterbeobachtung">
+              <PropertyRef Name="Beobachter_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Beobachtertouren_MMS_Bereich">
+          <End Role="MMS_Bereich" Type="Self.MMS_Bereich" Multiplicity="1" />
+          <End Role="MMS_Beobachtertouren" Type="Self.MMS_Beobachtertouren" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Bereich">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Beobachtertouren">
+              <PropertyRef Name="Bereich_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Bereich">
+          <End Role="MMS_Bereich" Type="Self.MMS_Bereich" Multiplicity="0..1" />
+          <End Role="MMS_Mitarbeiterbeobachtung" Type="Self.MMS_Mitarbeiterbeobachtung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Bereich">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Mitarbeiterbeobachtung">
+              <PropertyRef Name="Bereich_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Ort_MMS_Bereich">
+          <End Role="MMS_Bereich" Type="Self.MMS_Bereich" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MMS_Ort" Type="Self.MMS_Ort" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Bereich">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Ort">
+              <PropertyRef Name="Bereich_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Tourinformation_MMS_Bereich">
+          <End Role="MMS_Bereich" Type="Self.MMS_Bereich" Multiplicity="0..1" />
+          <End Role="MMS_Tourinformation" Type="Self.MMS_Tourinformation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Bereich">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Tourinformation">
+              <PropertyRef Name="Bereich_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Maschinenbeobachtung_MMS_Maschinenbeobachtung">
+          <End Role="MMS_Maschinenbeobachtung" Type="Self.MMS_Maschinenbeobachtung" Multiplicity="1" />
+          <End Role="MMS_Maschinenbeobachtung1" Type="Self.MMS_Maschinenbeobachtung" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Maschinenbeobachtung">
+              <PropertyRef Name="Beobachter_ID" />
+              <PropertyRef Name="Maschinenort_ID" />
+              <PropertyRef Name="Datum" />
+            </Principal>
+            <Dependent Role="MMS_Maschinenbeobachtung1">
+              <PropertyRef Name="Beobachter_ID" />
+              <PropertyRef Name="Maschinenort_ID" />
+              <PropertyRef Name="Datum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Mitarbeiter_MMS_Mitarbeiter">
+          <End Role="MMS_Mitarbeiter" Type="Self.MMS_Mitarbeiter" Multiplicity="1" />
+          <End Role="MMS_Mitarbeiter1" Type="Self.MMS_Mitarbeiter" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Mitarbeiter">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Mitarbeiter1">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Mitarbeiterfunktion">
+          <End Role="MMS_Mitarbeiterfunktion" Type="Self.MMS_Mitarbeiterfunktion" Multiplicity="0..1" />
+          <End Role="MMS_Mitarbeiterbeobachtung" Type="Self.MMS_Mitarbeiterbeobachtung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Mitarbeiterfunktion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Mitarbeiterbeobachtung">
+              <PropertyRef Name="Funktion_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Ort">
+          <End Role="MMS_Ort" Type="Self.MMS_Ort" Multiplicity="0..1" />
+          <End Role="MMS_Mitarbeiterbeobachtung" Type="Self.MMS_Mitarbeiterbeobachtung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Ort">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Mitarbeiterbeobachtung">
+              <PropertyRef Name="Ort_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Taetigkeit">
+          <End Role="MMS_Taetigkeit" Type="Self.MMS_Taetigkeit" Multiplicity="0..1" />
+          <End Role="MMS_Mitarbeiterbeobachtung" Type="Self.MMS_Mitarbeiterbeobachtung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Taetigkeit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Mitarbeiterbeobachtung">
+              <PropertyRef Name="Taetigkeit_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MMS_Obertaetigkeit_Untertaetigkeit_MMS_Taetigkeit1">
+          <End Role="MMS_Taetigkeit" Type="Self.MMS_Taetigkeit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MMS_Obertaetigkeit_Untertaetigkeit" Type="Self.MMS_Obertaetigkeit_Untertaetigkeit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MMS_Taetigkeit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MMS_Obertaetigkeit_Untertaetigkeit">
+              <PropertyRef Name="Untertaetigkeit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MMS_Oberort_Unterort">
+          <End Role="MMS_Ort" Type="Self.MMS_Ort" Multiplicity="*" />
+          <End Role="MMS_Ort1" Type="Self.MMS_Ort" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="mmsdbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MMS_Beobachter" EntityType="Self.MMS_Beobachter" />
+          <EntitySet Name="MMS_Beobachtertouren" EntityType="Self.MMS_Beobachtertouren" />
+          <EntitySet Name="MMS_Bereich" EntityType="Self.MMS_Bereich" />
+          <EntitySet Name="MMS_Maschinenbeobachtung" EntityType="Self.MMS_Maschinenbeobachtung" />
+          <EntitySet Name="MMS_Maschinenzustand" EntityType="Self.MMS_Maschinenzustand" />
+          <EntitySet Name="MMS_Mitarbeiter" EntityType="Self.MMS_Mitarbeiter" />
+          <EntitySet Name="MMS_Mitarbeiterbeobachtung" EntityType="Self.MMS_Mitarbeiterbeobachtung" />
+          <EntitySet Name="MMS_Mitarbeiterfunktion" EntityType="Self.MMS_Mitarbeiterfunktion" />
+          <EntitySet Name="MMS_Obertaetigkeit_Untertaetigkeit" EntityType="Self.MMS_Obertaetigkeit_Untertaetigkeit" />
+          <EntitySet Name="MMS_Ort" EntityType="Self.MMS_Ort" />
+          <EntitySet Name="MMS_Taetigkeit" EntityType="Self.MMS_Taetigkeit" />
+          <EntitySet Name="MMS_Tourinformation" EntityType="Self.MMS_Tourinformation" />
+          <AssociationSet Name="FK_MMS_Beobachtertouren_MMS_Beobachter" Association="Self.FK_MMS_Beobachtertouren_MMS_Beobachter">
+            <End Role="MMS_Beobachter" EntitySet="MMS_Beobachter" />
+            <End Role="MMS_Beobachtertouren" EntitySet="MMS_Beobachtertouren" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Beobachter" Association="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Beobachter">
+            <End Role="MMS_Beobachter" EntitySet="MMS_Beobachter" />
+            <End Role="MMS_Mitarbeiterbeobachtung" EntitySet="MMS_Mitarbeiterbeobachtung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Beobachtertouren_MMS_Bereich" Association="Self.FK_MMS_Beobachtertouren_MMS_Bereich">
+            <End Role="MMS_Bereich" EntitySet="MMS_Bereich" />
+            <End Role="MMS_Beobachtertouren" EntitySet="MMS_Beobachtertouren" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Bereich" Association="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Bereich">
+            <End Role="MMS_Bereich" EntitySet="MMS_Bereich" />
+            <End Role="MMS_Mitarbeiterbeobachtung" EntitySet="MMS_Mitarbeiterbeobachtung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Ort_MMS_Bereich" Association="Self.FK_MMS_Ort_MMS_Bereich">
+            <End Role="MMS_Bereich" EntitySet="MMS_Bereich" />
+            <End Role="MMS_Ort" EntitySet="MMS_Ort" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Tourinformation_MMS_Bereich" Association="Self.FK_MMS_Tourinformation_MMS_Bereich">
+            <End Role="MMS_Bereich" EntitySet="MMS_Bereich" />
+            <End Role="MMS_Tourinformation" EntitySet="MMS_Tourinformation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Maschinenbeobachtung_MMS_Maschinenbeobachtung" Association="Self.FK_MMS_Maschinenbeobachtung_MMS_Maschinenbeobachtung">
+            <End Role="MMS_Maschinenbeobachtung" EntitySet="MMS_Maschinenbeobachtung" />
+            <End Role="MMS_Maschinenbeobachtung1" EntitySet="MMS_Maschinenbeobachtung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Mitarbeiter_MMS_Mitarbeiter" Association="Self.FK_MMS_Mitarbeiter_MMS_Mitarbeiter">
+            <End Role="MMS_Mitarbeiter" EntitySet="MMS_Mitarbeiter" />
+            <End Role="MMS_Mitarbeiter1" EntitySet="MMS_Mitarbeiter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Mitarbeiterfunktion" Association="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Mitarbeiterfunktion">
+            <End Role="MMS_Mitarbeiterfunktion" EntitySet="MMS_Mitarbeiterfunktion" />
+            <End Role="MMS_Mitarbeiterbeobachtung" EntitySet="MMS_Mitarbeiterbeobachtung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Ort" Association="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Ort">
+            <End Role="MMS_Ort" EntitySet="MMS_Ort" />
+            <End Role="MMS_Mitarbeiterbeobachtung" EntitySet="MMS_Mitarbeiterbeobachtung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Mitarbeiterbeobachtung_MMS_Taetigkeit" Association="Self.FK_MMS_Mitarbeiterbeobachtung_MMS_Taetigkeit">
+            <End Role="MMS_Taetigkeit" EntitySet="MMS_Taetigkeit" />
+            <End Role="MMS_Mitarbeiterbeobachtung" EntitySet="MMS_Mitarbeiterbeobachtung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MMS_Obertaetigkeit_Untertaetigkeit_MMS_Taetigkeit1" Association="Self.FK_MMS_Obertaetigkeit_Untertaetigkeit_MMS_Taetigkeit1">
+            <End Role="MMS_Taetigkeit" EntitySet="MMS_Taetigkeit" />
+            <End Role="MMS_Obertaetigkeit_Untertaetigkeit" EntitySet="MMS_Obertaetigkeit_Untertaetigkeit" />
+          </AssociationSet>
+          <AssociationSet Name="MMS_Oberort_Unterort" Association="Self.MMS_Oberort_Unterort">
+            <End Role="MMS_Ort" EntitySet="MMS_Ort" />
+            <End Role="MMS_Ort1" EntitySet="MMS_Ort" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="mmsdbModelStoreContainer" CdmEntityContainer="mmsdbEntities">
+          <EntitySetMapping Name="MMS_Beobachter">
+            <EntityTypeMapping TypeName="mmsdbModel.MMS_Beobachter">
+              <MappingFragment StoreEntitySet="MMS_Beobachter">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Vorname" ColumnName="Vorname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Beobachtertouren">
+            <EntityTypeMapping TypeName="mmsdbModel.MMS_Beobachtertouren">
+              <MappingFragment StoreEntitySet="MMS_Beobachtertouren">
+                <ScalarProperty Name="Beobachter_ID" ColumnName="Beobachter_ID" />
+                <ScalarProperty Name="Bereich_ID" ColumnName="Bereich_ID" />
+                <ScalarProperty Name="Tourart" ColumnName="Tourart" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="Tourreihenfolge" ColumnName="Tourreihenfolge" />
+                <ScalarProperty Name="Mitarbeiterliste" ColumnName="Mitarbeiterliste" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Bereich">
+            <EntityTypeMapping TypeName="mmsdbModel.MMS_Bereich">
+              <MappingFragment StoreEntitySet="MMS_Bereich">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Bereich" ColumnName="Bereich" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Maschinenbeobachtung">
+            <EntityTypeMapping TypeName="mmsdbModel.MMS_Maschinenbeobachtung">
+              <MappingFragment StoreEntitySet="MMS_Maschinenbeobachtung">
+                <ScalarProperty Name="Beobachter_ID" ColumnName="Beobachter_ID" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="Maschinenort_ID" ColumnName="Maschinenort_ID" />
+                <ScalarProperty Name="Maschinenzustand_ID" ColumnName="Maschinenzustand_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Maschinenzustand">
+            <EntityTypeMapping TypeName="mmsdbModel.MMS_Maschinenzustand">
+              <MappingFragment StoreEntitySet="MMS_Maschinenzustand">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Zustand" ColumnName="Zustand" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Mitarbeiter">
+            <EntityTypeMapping TypeName="mmsdbModel.MMS_Mitarbeiter">
+              <MappingFragment StoreEntitySet="MMS_Mitarbeiter">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Vorname" ColumnName="Vorname" />
+                <ScalarProperty Name="Funktion_ID" ColumnName="Funktion_ID" />
+                <ScalarProperty Name="Bereich" ColumnName="Bereich" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Mitarbeiterbeobachtung">
+            <EntityTypeMapping TypeName="mmsdbModel.MMS_Mitarbeiterbeobachtung">
+              <MappingFragment StoreEntitySet="MMS_Mitarbeiterbeobachtung">
+                <ScalarProperty Name="Beobachter_ID" ColumnName="Beobachter_ID" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="Mitarbeiter_ID" ColumnName="Mitarbeiter_ID" />
+                <ScalarProperty Name="Taetigkeit_ID" ColumnName="Taetigkeit_ID" />
+                <ScalarProperty Name="Bereich_ID" ColumnName="Bereich_ID" />
+                <ScalarProperty Name="Ort_ID" ColumnName="Ort_ID" />
+                <ScalarProperty Name="Funktion_ID" ColumnName="Funktion_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Mitarbeiterfunktion">
+            <EntityTypeMapping TypeName="mmsdbModel.MMS_Mitarbeiterfunktion">
+              <MappingFragment StoreEntitySet="MMS_Mitarbeiterfunktion">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Funktion" ColumnName="Funktion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Obertaetigkeit_Untertaetigkeit">
+            <EntityTypeMapping TypeName="mmsdbModel.MMS_Obertaetigkeit_Untertaetigkeit">
+              <MappingFragment StoreEntitySet="MMS_Obertaetigkeit_Untertaetigkeit">
+                <ScalarProperty Name="Obertaetigkeit" ColumnName="Obertaetigkeit" />
+                <ScalarProperty Name="Untertaetigkeit" ColumnName="Untertaetigkeit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Ort">
+            <EntityTypeMapping TypeName="mmsdbModel.MMS_Ort">
+              <MappingFragment StoreEntitySet="MMS_Ort">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Bereich_ID" ColumnName="Bereich_ID" />
+                <ScalarProperty Name="Bezeichnung" ColumnName="Bezeichnung" />
+                <ScalarProperty Name="Typ" ColumnName="Typ" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Taetigkeit">
+            <EntityTypeMapping TypeName="mmsdbModel.MMS_Taetigkeit">
+              <MappingFragment StoreEntitySet="MMS_Taetigkeit">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Taetigkeit" ColumnName="Taetigkeit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MMS_Tourinformation">
+            <EntityTypeMapping TypeName="mmsdbModel.MMS_Tourinformation">
+              <MappingFragment StoreEntitySet="MMS_Tourinformation">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Bereich_ID" ColumnName="Bereich_ID" />
+                <ScalarProperty Name="Art" ColumnName="Art" />
+                <ScalarProperty Name="Dauer" ColumnName="Dauer" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MMS_Oberort_Unterort" TypeName="mmsdbModel.MMS_Oberort_Unterort" StoreEntitySet="MMS_Oberort_Unterort">
+            <EndProperty Name="MMS_Ort">
+              <ScalarProperty Name="ID" ColumnName="Oberort" />
+            </EndProperty>
+            <EndProperty Name="MMS_Ort1">
+              <ScalarProperty Name="ID" ColumnName="Unterort" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

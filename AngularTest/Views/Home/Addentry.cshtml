@@ -1,0 +1,138 @@
+﻿
+
+<table style="width: 100%" cellspacing="0">
+    <tr>
+        <td><h2>{{enterinfo}} - {{select}}</h2></td>
+        <td align="right"><button md-raised-button color="BoschRed" style="color:white;margin:10px 0px 10px 10px;height:60px !important;width:180px !important;" (click)="goback()">{{back}}</button></td>
+    </tr>
+</table>
+<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+    <md-card class="demo-card demo-basic" [style.background]="'#ccccff'">
+        @*<md-toolbar color="primary">
+              Bitte fügen Sie hier Informationen ein - {{select}}
+            </md-toolbar>*@
+        <md-card-content>
+            <form *ngIf="select=='Beobachter'">
+                <md-input class="demo-full-width" placeholder={{company}} disabled value="Robert Bosch GmbH"> </md-input>
+                <table style="width: 100%" cellspacing="0" cellpadding="10">
+                    <tr>
+                        <td><md-input #Obsname placeholder={{surname}} style="width: 80%" required></md-input></td>@*dividerColor="accent"*@  
+                    </tr>
+                    <tr>
+                        <td><md-input #Obsvorname placeholder={{firstname}} style="width: 80%" required></md-input></td>               
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <button md-raised-button color="success" style="margin:10px 0px 10px 0px;height:50px !important;width:150px !important;" (click)="addobserver(Obsname.value,Obsvorname.value,'Insert')">{{send}} &raquo;</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <form *ngIf="select=='Bereich'">
+                <md-input class="demo-full-width" placeholder={{company}} disabled value="Robert Bosch GmbH"> </md-input>
+                <table style="width: 100%" cellspacing="0" cellpadding="10">
+                    <tr>
+                        <td><md-input placeholder={{placename}} #area style="width: 80%" required></md-input></td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <button md-raised-button color="success" style="margin:10px 0px 10px 0px;height:50px !important;width:150px !important;" (click)="addarea(area.value,'Insert')">{{send}} &raquo;</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <form *ngIf="select=='Mitarbeiter'">
+                <md-input class="demo-full-width" placeholder={{company}} disabled value="Robert Bosch GmbH"> </md-input>
+                <table style="width: 100%" cellspacing="0" cellpadding="10">
+                    <tr>
+                        <td><md-input #empname placeholder={{surname}} style="width: 80%" required></md-input></td>
+                        <td><md-input #empvorname placeholder={{firstname}} style="width: 80%" required></md-input></td>
+                    </tr>
+                    <tr>
+                        <td><md-input #empfunction placeholder={{function}} style="width: 80%" required></md-input></td>
+                        <td><md-input #emparea placeholder={{placename}} value={{area}} style="width: 80%" required></md-input></td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <button md-raised-button color="success" style="margin:10px 0px 10px 0px;height:50px !important;width:150px !important;" (click)="addemployee(empname.value,empvorname.value,empfunction.value,emparea.value,'NA','Insert')">{{send}} &raquo;</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <form *ngIf="select=='MitarbeiterBeobachter'">
+                <md-input class="demo-full-width" placeholder={{company}} disabled value="Robert Bosch GmbH"> </md-input>
+                <table style="width: 100%" cellspacing="0" cellpadding="10">
+                    <tr>
+                        <td><md-input #observer disabled placeholder={{obsname}} id={{Observerid}}  value={{Observername}} style="width: 80%" required></md-input></td>
+                        <td><md-input #emparea disabled placeholder={{placename}} value={{area}} style="width: 80%" required></md-input></td>
+                    </tr>
+                    <tr>
+                        <td><md-input #empname placeholder={{surname}} style="width: 80%" required></md-input></td>
+                        <td><md-input #empvorname placeholder={{firstname}} style="width: 80%" required></md-input></td>
+                        <td><md-input #empfunction placeholder={{function}} style="width: 80%" required></md-input></td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <button md-raised-button color="success" style="margin:10px 0px 10px 0px;height:50px !important;width:150px !important;" (click)="addemployee(empname.value,empvorname.value,empfunction.value,emparea.value,observer.id,'Insert')">{{send}} &raquo;</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <form *ngIf="select=='Tätigkeit'">
+                <md-input class="demo-full-width" placeholder={{company}} disabled value="Robert Bosch GmbH"> </md-input>
+                <table style="width: 100%" cellspacing="0" cellpadding="10">
+                    <tr>
+                        <td><md-input #activity placeholder={{empactivity}} style="width: 80%" required></md-input></td>
+                        <td><md-checkbox (click)='checkunter(c.checked)' #c>{{empdownactivity}}</md-checkbox></td>
+                    </tr>
+                    <tr>
+                        <td><md-input #downactivity [disabled]='!c.checked' placeholder={{empdownactivity}} style="width: 80%" required></md-input></td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <button md-raised-button color="success" style="margin:10px 0px 10px 0px;height:50px !important;width:150px !important;" (click)="addactivity(activity.value,downactivity.value,'Insert')">{{send}} &raquo;</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <form *ngIf="select=='Maschine'">
+                <table style="width: 100%" cellspacing="0" cellpadding="10">
+                    <tr>
+                        <td align="left"><md-input placeholder={{company}} disabled value="Robert Bosch GmbH"> </md-input></td>
+                        @*<td align="left"><md-checkbox #c style="color:red"><b>Linie/Station löschen</b></md-checkbox></td>*@
+                    </tr>
+                    <tr>
+                        <td><md-input #place placeholder={{placename}} value={{area}} style="width: 80%" required></md-input></td>
+                        <td><md-input #machine placeholder={{lineheader}} style="width: 80%" required></md-input></td>
+                    </tr>
+                    <tr>
+                        <td><md-input #typ placeholder="Type" value={{type}} style="width: 80%" required></md-input></td>
+                        <td><md-input  #downmachine placeholder={{station}} style="width: 80%" required></md-input></td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <button md-raised-button color="success" style="margin:10px 0px 10px 0px;height:50px !important;width:150px !important;" (click)="addmachine(place.value,machine.value,downmachine.value,typ.value,'Insert')">{{send}} &raquo;</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <form *ngIf="select=='MaschinenZustand'">
+                <md-input class="demo-full-width" placeholder={{company}} disabled value="Robert Bosch GmbH"> </md-input>
+                <table style="width: 100%" cellspacing="0">
+                    <tr>
+                        <td><md-input placeholder={{machinestate}} #state style="width: 80%" required></md-input></td>
+                    </tr>
+                    <tr>
+                        <td align="left">
+                            <button md-raised-button color="success" style="margin:10px 0px 10px 0px;height:50px !important;width:150px !important;" (click)="addmachinestate(state.value,'Insert')">{{send}} &raquo;</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </md-card-content>
+    </md-card>
+</section>
+
+
+
+

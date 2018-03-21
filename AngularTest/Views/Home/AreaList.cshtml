@@ -1,0 +1,45 @@
+﻿<table style="width: 100%" cellspacing="0">
+    <tr>
+        <td><h1>{{head}}</h1></td>
+        <td align="right"><button routerLink='/addentry/Bereich' routerLinkActive='active' md-raised-button color="BoschRed" style="color:white;margin:10px 0px 10px 10px;height:60px !important;width:180px !important;">{{new}}</button></td>
+    </tr>
+</table>
+
+<md-card  style="margin-bottom: 20px;" [style.background]="'#b3c6ff'">
+    <md-input *ngIf='observer' placeholder={{observername}} disabled [(ngModel)]='observer' style="width: 300px;"></md-input>
+    <md-input *ngIf='nonselect' disabled style="width: 300px;color:darkred" [(ngModel)]='nonselect'></md-input>
+</md-card>
+
+<section layout="row" *ngIf='area' layout-sm="column" layout-align="center center" layout-wrap>
+    <button *ngFor='let areaname of area' value={{areaname[0].id}} id={{areaname[0].id}} (click)='goToEmployee(areaname[0].name)' (dblclick)="goToEdit(areaname[0].id,areaname[0].name,Edit)" md-raised-button style="margin: 2px 2px;height:120px;width:245px;vertical-align:middle;background-color:#266399;color:white;">
+        {{areaname[0].name}}
+    </button>
+</section>
+
+<md2-dialog #Edit>
+    <md2-dialog-title>{{update}} {{head}}</md2-dialog-title>
+    <md-input class="demo-full-width" placeholder={{company}} disabled value="Robert Bosch GmbH"> </md-input>
+    <table style="width: 100%" cellspacing="0" cellpadding="10">
+        <tr>
+            <td><md-input #Id placeholder="ID" disabled style="width: 80%" value={{id}} id={{id}}></md-input></td>
+        </tr>
+        <tr>
+            <td><md-input #areaname placeholder={{placename}} style="width: 80%" value={{name}} required></md-input></td>
+        </tr>
+    </table>
+    <md2-dialog-footer>
+        <button md-raised-button color="success" (click)="goToUpdate(Id.value,areaname.value,Edit)">{{update}}</button>
+        <button md-raised-button color="BoschRed" (click)="confirm1.show()">{{delete}}</button>
+        <button md-raised-button (click)="Edit.close()">{{cancel}}</button>
+    </md2-dialog-footer>
+</md2-dialog>
+
+<md2-dialog #confirm1>
+    <md2-dialog-title>{{warning}}!!!</md2-dialog-title>
+    <div><b>{{id}}-</b> {{warndata}}</div>
+    <md2-dialog-footer>
+        <button md-raised-button color="success" (click)="goToDelete(id,name,confirm1,Edit)">{{yes}}</button>
+        <button md-raised-button color="BoschRed" (click)="confirm1.close()">{{no}}</button>
+    </md2-dialog-footer>
+</md2-dialog>
+
